@@ -1,28 +1,13 @@
-<<<<<<< HEAD
 node_modules/
 .expo/
 dist/
 npm-debug.*
-=======
-# Learn more https://docs.github.com/en/get-started/getting-started-with-git/ignoring-files
-
-# dependencies
-node_modules/
-
-# Expo
-.expo/
-dist/
-web-build/
-
-# Native
-*.orig.*
->>>>>>> 1bffa98d7c5d6fa8b973fd0a18c24a06ad1c2a8c
 *.jks
 *.p8
 *.p12
 *.key
 *.mobileprovision
-<<<<<<< HEAD
+
 *.orig.*
 web-build/
 
@@ -34,7 +19,7 @@ web-build/
 
 expo-env.d.ts
 # @end expo-cli
-=======
+
 
 # Metro
 .metro-health-check*
@@ -55,4 +40,3 @@ yarn-error.*
 *.tsbuildinfo
 
 package-lock.json
->>>>>>> 1bffa98d7c5d6fa8b973fd0a18c24a06ad1c2a8c
