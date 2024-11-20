@@ -1,8 +1,11 @@
 import '../styles/global.css'
-import { Slot, Stack } from 'expo-router'
+import { Slot } from 'expo-router'
+import { SessionProvider } from '@/src/hooks/auth';
 
-export default function RootLayout() {
+export default function Root() {
   return (
-    <Slot/>
+    <SessionProvider>
+      <Slot/>
+    </SessionProvider>
   )
 }
