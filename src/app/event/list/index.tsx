@@ -15,7 +15,6 @@ export default function EventList() {
                     return new CertificaUTFEventEndpoint( token ).findAll();
                 },
                 onSuccess: ( result: any ) => {
-                    console.log( result );
                     setEvents( result )
                 }
             }

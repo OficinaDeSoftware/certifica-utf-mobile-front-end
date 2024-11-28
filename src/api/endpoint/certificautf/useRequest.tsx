@@ -19,8 +19,6 @@ export function useRequest() {
 
         const result = await request( session?.accessToken );
 
-        console.log( result );
-
         if( result.success ) {
             onSuccess( result.data );
         } else {

@@ -28,9 +28,7 @@ export class FetchWrapper {
             ...options,
             headers
         };
-
-        console.log( config );
-
+        
         return await fetch(url, config);
 
     }
@@ -44,7 +42,6 @@ export class FetchWrapper {
     };
 
     public async get ( endpoint: string, headers: HeadersInit = {}): Promise<Response> {
-        console.log( endpoint );
         return this.request( endpoint, {
             method: 'GET',
             headers,
