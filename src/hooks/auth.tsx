@@ -3,6 +3,7 @@ import { useContext, createContext, type PropsWithChildren, useState} from 'reac
 import { useStorageState } from './useStorageState';
 import { CertificaUTFAuthEndpoint } from '@/src/api/endpoint/certificautf/CertificaUTFAuthEndpoint';
 import { SessionType } from "@/types/SessionType";
+import { Result } from "@/types/api/endpoin/certificautf/Result"
 
 interface AuthProps {
     signIn: ( ra: string, password: string ) => void;
@@ -38,16 +39,16 @@ const signIn = async( ra: string, password: string, setSession: any, setError: a
 
     const endpoint = new CertificaUTFAuthEndpoint();
 
-    const response = await endpoint.singIn( ra, password );
+    const result : Result = await endpoint.singIn( ra, password );
 
     setLoading(false);
 
-    if( !response.success ) {
-        setError( response.message );
+    if( !result.success ) {
+        setError( result.message );
         return;
     }
 
-    setSession( JSON.stringify( response.data ) );
+    setSession( JSON.stringify( result.data ) );
 
     router.replace('/event/list');
 

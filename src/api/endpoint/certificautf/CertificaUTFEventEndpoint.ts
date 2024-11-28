@@ -8,7 +8,7 @@ export class CertificaUTFEventEndpoint extends CertificaUTFEndpoint {
         super( token );
     }
 
-    public async findAll () : Promise<Result> {
+    public async findAll() : Promise<Result> {
 
         try {
 
