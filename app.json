@@ -1,5 +1,6 @@
 {
   "expo": {
+    "newArchEnabled": true,
     "name": "certifica-utf-mobile-front-end",
     "slug": "certifica-utf-mobile-front-end",
     "version": "1.0.0",
