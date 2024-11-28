@@ -10,7 +10,7 @@ export class FetchWrapper {
 
     private getHeaders( headers: HeadersInit = {} ): HeadersInit {
 
-        const authHeaders: HeadersInit = this.token ? { "Authorization": `Bearer ${this.token}` } : {};
+        const authHeaders: HeadersInit = this.token ? { "Authorization": `${this.token}` } : {};
 
         return {
             ...headers,
@@ -39,6 +39,14 @@ export class FetchWrapper {
         return this.request( endpoint, {
             method: 'POST',
             body: JSON.stringify( body ),
+            headers,
+        });
+    };
+
+    public async get ( endpoint: string, headers: HeadersInit = {}): Promise<Response> {
+        console.log( endpoint );
+        return this.request( endpoint, {
+            method: 'GET',
             headers,
         });
     };

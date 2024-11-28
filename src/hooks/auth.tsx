@@ -1,12 +1,13 @@
 import { router } from 'expo-router';
 import { useContext, createContext, type PropsWithChildren, useState} from 'react';
 import { useStorageState } from './useStorageState';
-import { CertificaUTFEndpoint } from '@/src/api/endpoint/certificautf/CertificaUTFEndpoint';
+import { CertificaUTFAuthEndpoint } from '@/src/api/endpoint/certificautf/CertificaUTFAuthEndpoint';
+import { SessionType } from "@/types/SessionType";
 
 interface AuthProps {
     signIn: ( ra: string, password: string ) => void;
     signOut: () => void;
-    session?: string | null;
+    session?: SessionType | null;
     isLoading: boolean;
     error: string | null;
 }
@@ -35,7 +36,7 @@ const signIn = async( ra: string, password: string, setSession: any, setError: a
 
     setLoading(true);
 
-    const endpoint = new CertificaUTFEndpoint();
+    const endpoint = new CertificaUTFAuthEndpoint();
 
     const response = await endpoint.singIn( ra, password );
 
@@ -46,16 +47,18 @@ const signIn = async( ra: string, password: string, setSession: any, setError: a
         return;
     }
 
-    setSession('xxx');
+    setSession( JSON.stringify( response.data ) );
 
-    router.replace('/event/detail');
+    router.replace('/event/list');
 
 }
 
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [ [ isLoading, session ], setSession] = useStorageState('session');
+  const [ [ _, sessionStorage ], setSession] = useStorageState('session');
   const [ error, setError ] = useState<string | null>(null);
-  const [ loading, setLoading ] = useState(false);
+  const [ isLoading, setLoading ] = useState(false);
+
+  const session : SessionType | null = sessionStorage ? JSON.parse( sessionStorage ) : null;
 
   return (
     <AuthContext.Provider
@@ -67,7 +70,7 @@ export function SessionProvider({ children }: PropsWithChildren) {
           setSession(null);
         },
         session,
-        isLoading: loading,
+        isLoading,
         error
       }}>
       {children}
