@@ -6,7 +6,8 @@ import { useForm, FormProvider } from "react-hook-form"
 import { ErrorMessage } from "@/src/components/errormessage";
 import { StyledButton } from "@/src/components/styledbutton";
 
-import AntDesign from '@expo/vector-icons/AntDesign';
+import { InputPassword } from "@/src/components/inputpassword";
+import { Ionicons } from "@expo/vector-icons";
 
 export default function SignIn() {
 
@@ -42,7 +43,7 @@ export default function SignIn() {
                                 }
                             }
                         />
-                        <InputLabel
+                        <InputPassword
                             label="Senha"
                             name="password"
                             placeholder="Digite sua senha"
@@ -65,7 +66,7 @@ export default function SignIn() {
                     </StyledButton>
                    {/*TODO alterar para usar o button do provider.*/}
                     <TouchableOpacity className="bg-white rounded-full flex flex-row justify-center items-center h-14 gap-2">
-                        <AntDesign name="google" size={24} color="black" />
+                        <Ionicons name="logo-google" size={24} color="black" />
                         <Text>Continuar com o Google</Text>
                     </TouchableOpacity>
                 </View>
