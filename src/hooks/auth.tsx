@@ -1,16 +1,23 @@
-import { useContext, createContext, type PropsWithChildren } from 'react';
+import { router } from 'expo-router';
+import { useContext, createContext, type PropsWithChildren, useState} from 'react';
 import { useStorageState } from './useStorageState';
+import { CertificaUTFAuthEndpoint } from '@/src/api/endpoint/certificautf/CertificaUTFAuthEndpoint';
+import { SessionType } from "@/types/SessionType";
 
-const AuthContext = createContext<{
-  signIn: () => void;
-  signOut: () => void;
-  session?: string | null;
-  isLoading: boolean;
-}>({
-  signIn: () => null,
+interface AuthProps {
+    signIn: ( ra: string, password: string ) => void;
+    signOut: () => void;
+    session?: SessionType | null;
+    isLoading: boolean;
+    error: string | null;
+}
+
+const AuthContext = createContext<AuthProps>({
+  signIn: ( ra: string, password: string ) => null,
   signOut: () => null,
   session: null,
   isLoading: false,
+  error: null,
 });
 
 // This hook can be used to access the user info.
@@ -25,21 +32,46 @@ export function useSession() {
   return value;
 }
 
+const signIn = async( ra: string, password: string, setSession: any, setError: any, setLoading: any ) => {
+
+    setLoading(true);
+
+    const endpoint = new CertificaUTFAuthEndpoint();
+
+    const response = await endpoint.singIn( ra, password );
+
+    setLoading(false);
+
+    if( !response.success ) {
+        setError( response.message );
+        return;
+    }
+
+    setSession( JSON.stringify( response.data ) );
+
+    router.replace('/event/list');
+
+}
+
 export function SessionProvider({ children }: PropsWithChildren) {
-  const [[isLoading, session], setSession] = useStorageState('session');
+  const [ [ _, sessionStorage ], setSession] = useStorageState('session');
+  const [ error, setError ] = useState<string | null>(null);
+  const [ isLoading, setLoading ] = useState(false);
+
+  const session : SessionType | null = sessionStorage ? JSON.parse( sessionStorage ) : null;
 
   return (
     <AuthContext.Provider
       value={{
-        signIn: () => {
-          // Perform sign-in logic here
-          setSession('xxx');
-        },
+        signIn: async ( ra: string, password: string ) => {
+            await signIn( ra, password, setSession, setError, setLoading );
+        } ,
         signOut: () => {
           setSession(null);
         },
         session,
         isLoading,
+        error
       }}>
       {children}
     </AuthContext.Provider>
