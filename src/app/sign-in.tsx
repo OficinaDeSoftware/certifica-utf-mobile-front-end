@@ -12,9 +12,14 @@ export default function SignIn() {
 
     const { signIn, error, isLoading } = useSession();
 
-    const onSubmit = (data : any ) => signIn(data.ra, data.password);
+    const onSubmit = ( { ra, password } : any ) => signIn( ra, password );
 
-    const methods = useForm()
+    const methods = useForm({
+        defaultValues: {
+            ra: '',
+            password: ''
+        }
+    })
 
     return (
       <FormProvider {...methods}>
@@ -23,8 +28,34 @@ export default function SignIn() {
                 <Text className="text-white text-5xl text-center ">CertificaUTF</Text>
                 <View className="flex flex-col gap-8">
                     <View className="flex flex-col gap-2">
-                        <InputLabel label="RA" name="ra" placeholder="Digite seu RA"/>
-                        <InputLabel label="Senha" name="password" placeholder="Digite sua senha"/>
+                        <InputLabel
+                            label="RA"
+                            name="ra"
+                            placeholder="Digite seu RA"
+                            rules={
+                                {
+                                    required: "RA é obrigatório",
+                                    maxLength: {
+                                        value: 20,
+                                        message: 'Tamanho maior que o permitido',
+                                    },
+                                }
+                            }
+                        />
+                        <InputLabel
+                            label="Senha"
+                            name="password"
+                            placeholder="Digite sua senha"
+                            rules={
+                                {
+                                    required: "Senha é obrigatório",
+                                    maxLength: {
+                                        value: 20,
+                                        message: 'Tamanho maior que o permitido',
+                                    },
+                                }
+                            }
+                        />
                     </View>
                     { error && <ErrorMessage message={error} />}
                     <StyledButton

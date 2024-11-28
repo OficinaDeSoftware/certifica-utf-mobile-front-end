@@ -22,7 +22,7 @@ export function InputLabel({ label, name, placeholder, rules  } : InputLabelProp
                 placeholderTextColor="#c5c5c5"
                 className="text-white bg-neutral-700 border-2 border-purple-500 rounded h-14 p-4"
             />
-            { errors[name] && <Text>{ ( errors[name] as any )?.message }</Text>}
+            { errors[name] && <Text className="text-red-400 break-normal">{ ( errors[name] as any )?.message }</Text>}
         </View>
     );
 }
