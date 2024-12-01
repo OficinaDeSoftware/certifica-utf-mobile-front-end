@@ -111,6 +111,33 @@
         ],
         "image": "@/assets/images/event/detail/event-detail-background.jpg",
         "participants": 50000
-      }      
+      },
+      {
+        "id": "2",
+        "name": "AI & Machine Learning Summit",
+        "initialDate": "2024-12-05T00:00:00.000Z",
+        "finalDate": "2024-12-07T00:00:00.000Z",
+        "workload": 30,
+        "description": "O AI & Machine Learning Summit é um evento voltado para profissionais, acadêmicos e entusiastas da inteligência artificial e aprendizado de máquina. O evento oferece workshops práticos, palestras de especialistas renomados e painéis de discussão sobre os avanços mais recentes em IA, aplicações no mundo real e ética na tecnologia. Participe para explorar soluções inovadoras em áreas como visão computacional, processamento de linguagem natural, robótica e muito mais.",
+        "location": {
+          "description": "Auditório Central, Universidade UTF",
+          "latitude": 34.0522,
+          "longitude": -118.2437,
+          "latitudeDelta": 0.0922,
+          "longitudeDelta": 0.0421
+        },
+        "eventDates": [
+          {
+            "initialDate": "2024-12-05T00:00:00.000Z",
+            "finalDate": "2024-12-06T00:00:00.000Z"
+          },
+          {
+            "initialDate": "2024-12-07T00:00:00.000Z",
+            "finalDate": "2024-12-07T23:59:59.999Z"
+          }
+        ],
+        "image": "@/assets/images/event/detail/ai-ml-summit-background.jpg",
+        "participants": 15000
+      }  
     ]
   }
