@@ -83,5 +83,34 @@
         "image": "https://i.imgur.com/BaUUCkc.png",
         "restaurantId": "3"
       }
+    ],
+    "events": [
+      {
+        "id": "1",
+        "name": "Blockchain Hackathon",
+        "initialDate": "2024-11-24T00:00:00.000Z",
+        "finalDate": "2024-12-01T00:00:00.000Z",
+        "workload": 50,
+        "description": "O Blockchain Hackathon é um evento colaborativo e intensivo que reúne desenvolvedores, entusiastas de blockchain, designers e empreendedores para explorar, inovar e criar soluções utilizando tecnologias descentralizadas. Durante o evento, participantes terão a oportunidade de trabalhar em equipe para desenvolver projetos que aproveitam o potencial da blockchain, resolvendo problemas reais e propondo inovações em áreas como finanças, saúde, supply chain, NFTs, contratos inteligentes e muito mais.",
+        "location": {
+          "description": "B6-S1",
+          "latitude": 37.7749,
+          "longitude": -122.4194,
+          "latitudeDelta": 0.0922,
+          "longitudeDelta": 0.0421
+        },
+        "eventDates": [
+          {
+            "initialDate": "2024-11-24T00:00:00.000Z",
+            "finalDate": "2024-11-25T00:00:00.000Z"
+          },
+          {
+            "initialDate": "2024-11-26T00:00:00.000Z",
+            "finalDate": "2024-12-01T00:00:00.000Z"
+          }
+        ],
+        "image": "@/assets/images/event/detail/event-detail-background.jpg",
+        "participants": 50000
+      }      
     ]
   }
