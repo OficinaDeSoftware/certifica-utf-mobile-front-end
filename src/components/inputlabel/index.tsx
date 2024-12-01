@@ -1,5 +1,5 @@
 import { Text, TextInput, View } from "react-native"
-import { useFormContext, RegisterOptions, FieldValue, FieldErrors } from "react-hook-form";
+import { useFormContext, RegisterOptions } from "react-hook-form";
 import Ionicons from '@expo/vector-icons/Ionicons';
 
 interface InputLabelProps {
