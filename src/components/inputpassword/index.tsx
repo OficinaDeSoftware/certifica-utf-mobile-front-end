@@ -11,7 +11,7 @@ interface InputPasswordProps {
 
 export function InputPassword( { label, name, placeholder, rules } : InputPasswordProps ) {
 
-    const [ isSecurityType, setSecurityType ] =  useState<boolean>( false );
+    const [ isSecurityType, setSecurityType ] =  useState<boolean>( true );
 
     const dsIconName = isSecurityType ? 'eye-off-outline' : 'eye-outline';
 
