@@ -50,7 +50,7 @@ const signIn = async( ra: string, password: string, setSession: any, setError: a
 
     setSession( JSON.stringify( result.data ) );
 
-    router.replace('/profile');
+    router.replace('/event/list');
 
 }
 

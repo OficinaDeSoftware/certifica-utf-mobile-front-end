@@ -29,8 +29,6 @@ export default function Card({ event }: { event: Event }) {
         { /* Não descobri como fazer o overlapping nessa desgraça */ }
         <View className="flex-row -space-x-3 pr-4">
           <ParticipantImage imageSrc={''} />
-          <ParticipantImage imageSrc={''} />
-          <ParticipantImage imageSrc={''} />
         </View>
         <Text className="text-white text-base">{event.participants} Participantes</Text>
       </View>
