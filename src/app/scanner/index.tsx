@@ -46,9 +46,15 @@ export default function Scanner() {
         onBarcodeScanned={({ data }) => {
           if (data && !qrLock.current) {
             qrLock.current = true;
-            setTimeout(async () => {
-              await Linking.openURL(data);
-            }, 500);
+            router.push({
+              pathname: '/scanner/status',
+              params: { status: String(true) }, // Passa o status como parâmetro
+            });
+          } else {
+            router.push({
+              pathname: '/scanner/status',
+              params: { status: String(false) }, // Passa o status como parâmetro
+            });
           }
         }}
         barcodeScannerSettings={{
