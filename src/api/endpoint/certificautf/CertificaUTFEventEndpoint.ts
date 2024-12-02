@@ -12,7 +12,7 @@ export class CertificaUTFEventEndpoint extends CertificaUTFEndpoint {
 
         try {
 
-            const response= await this.httpClient.get( "/api/evento/findAll" );
+            const response = await this.httpClient.get( "/api/evento/findAll" );
 
             const data = await response.json();
 

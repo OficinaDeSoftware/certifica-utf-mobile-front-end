@@ -1,6 +1,4 @@
-import {useStorageState} from "@/src/hooks/useStorageState";
-import {SessionType} from "@/types/SessionType";
-import {FetchWrapper} from "@/src/helper/FetchWrapper";
+import { FetchWrapper } from "@/src/helper/FetchWrapper";
 
 export class CertificaUTFEndpoint {
 

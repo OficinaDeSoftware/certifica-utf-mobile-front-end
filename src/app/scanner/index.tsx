@@ -12,6 +12,7 @@ import {
 import Overlay from "@/src/app/scanner/overlay";
 import { useEffect, useRef } from "react";
 import { Ionicons, Feather } from '@expo/vector-icons'
+import BackStackScreenButton from "@/src/components/backstackscreenbutton";
 
 export default function Scanner() {
   const qrLock = useRef(false);
@@ -36,20 +37,9 @@ export default function Scanner() {
   return (
     <SafeAreaView style={StyleSheet.absoluteFillObject}>
       {Platform.OS === "android" ? <StatusBar hidden /> : null}
-      <Pressable
-        onPress={() => router.back()}
-        style={{
-          position: "absolute",
-          top: 28,
-          left: 28,
-          backgroundColor: "rgba(0, 0, 0, 0.2)",
-          zIndex: 10,
-          borderRadius: 10,
-          padding: 4,
-        }}
-      >
-        <Ionicons name="chevron-back" size={40} color="white" />
-      </Pressable>
+      
+      <BackStackScreenButton />
+
       <CameraView
         style={StyleSheet.absoluteFillObject}
         facing="back"

@@ -1,5 +1,3 @@
-import { FetchWrapper } from '@/src/helper/FetchWrapper';
-
 import { Result, SignInRequest, ErrorResponse, SignInResponse } from "@/types/api/endpoin/certificautf/module"
 
 import { CertificaUTFEndpoint } from "@/src/api/endpoint/certificautf/CertificaUTFEndpoint";
@@ -7,8 +5,6 @@ import { CertificaUTFEndpoint } from "@/src/api/endpoint/certificautf/CertificaU
 export class CertificaUTFAuthEndpoint extends CertificaUTFEndpoint {
 
     public async singIn( ra: string , password: string ) : Promise<Result> {
-
-        const fetchWrapper = new FetchWrapper( this.baseUrl );
 
         const request : SignInRequest = {
             login: ra,
@@ -18,7 +14,7 @@ export class CertificaUTFAuthEndpoint extends CertificaUTFEndpoint {
 
         try {
 
-            const response = await fetchWrapper.post(
+            const response = await this.httpClient.post(
                 '/api/auth/signIn',
                 request
             )
