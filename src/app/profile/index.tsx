@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, ActivityIndicator } from 'react-native';
 import QRCode from 'react-native-qrcode-svg'; 
-import Loading from './../../components/loading'; 
+import Loading from './../../components/loading';
+import BackStackScreenButton from "@/src/components/backstackscreenbutton";
 
 //comentado para teste
 /*interface ProfileProps {
@@ -77,6 +78,7 @@ const Profile: React.FC/*<ProfileProps>*/ = (/*{ fetchData }*/) => {
     return (
       <View className="flex-1 bg-neutral-700">
         {/* Imagem do Aluno */}
+        <BackStackScreenButton />
         <View className="items-center mt-16">
           <Image
             source={{ uri: 'https://via.placeholder.com/230' }} // Substituir pela URL da imagem do backend
