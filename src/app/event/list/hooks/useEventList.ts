@@ -1,56 +1,8 @@
 import { useEffect, useState } from "react";
-import { Event } from "@/types/EventType";
+import { useRequest } from "@/src/api/endpoint/certificautf/useRequest";
+import { CertificaUTFEventEndpoint } from "@/src/api/endpoint/certificautf/CertificaUTFEventEndpoint";
 
 export default function useEventList() {
-  // TODO: Remover posteriormente
-  const [isLoading, setIsLoading] = useState<boolean>(false);
-  const [isError, setIsError] = useState<boolean>(false);
-  const [events, setEvents] = useState<Event[]>([]);
-
-  async function delay(ms: number) {
-    return new Promise((resolve) => setTimeout(resolve, ms));
-  }
-
-  async function fetchAllEventJSONServer(): Promise<Event[] | null> {
-    await delay(1000);
-
-    const response = await fetch(
-      `${process.env.EXPO_PUBLIC_JSON_SERVER_API_URL}/events`
-    );
-
-    return await response.json();
-  }
-
-  async function fetchAllEvent(): Promise<Event[] | null> {
-    try {
-      return await fetchAllEventJSONServer();
-    } catch (error) {
-      console.log(error);
-      setIsError(true);
-      return null;
-    }
-  }
-
-  useEffect(() => {
-    async function fetchSetEvents() {
-      setIsLoading(true);
-      const eventResponse = await fetchAllEvent();
-
-      if (eventResponse) {
-        setEvents(eventResponse);
-      }
-      setIsLoading(false);
-    }
-    fetchSetEvents();
-  }, []);
-
-  return {
-    isError,
-    isLoading,
-    events,
-  };
-
-  /* TODO: Utilizar servidor real posteriormente
 
     const { isLoading, error, fetchApi } = useRequest();
     const [events, setEvents] = useState<[]>([]);
@@ -76,5 +28,4 @@ export default function useEventList() {
       events,
     };
 
-  */
 }

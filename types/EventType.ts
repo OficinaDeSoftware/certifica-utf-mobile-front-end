@@ -1,26 +1,32 @@
-
 export type Event = {
   id: string;
   name: string;
-  initialDate: string;
-  finalDate: string;
+  startDate: string;
+  endDate: string;
   workload: number;
   description: string;
   location: EventLocation;
-  eventDates: Array<EventDate>;
-  image: string;
-  participants: number;	
+  dates: Array<EventDate>;
+  backgroundUrl: string;
+  participants: number | undefined;	
 }
 
 export type EventLocation = {
-  description: string;
+  address: string;
+  complement: number;
+  capacity: number;
+  coordinates: Coordinates;
+}
+
+export type Coordinates = {
   latitude: number;
   longitude: number;
-  latitudeDelta: number;
-  longitudeDelta: number;
 }
 
 export type EventDate = {
-  initialDate: string;
-  finalDate: string;
+  id: number | undefined;
+  title: string;
+  date: string;
+  startTime: string;
+  endTime: string;
 }

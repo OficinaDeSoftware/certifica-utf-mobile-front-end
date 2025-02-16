@@ -12,7 +12,7 @@ export class CertificaUTFEventEndpoint extends CertificaUTFEndpoint {
 
         try {
 
-            const response = await this.httpClient.get( "/api/evento/findAll" );
+            const response = await this.httpClient.get( "/api/event" );
 
             const data = await response.json();
 
@@ -30,6 +30,32 @@ export class CertificaUTFEventEndpoint extends CertificaUTFEndpoint {
                 success: false,
                 data: null,
                 message: "Falha ao buscar eventos!"
+            }
+        }
+    }
+
+    public async findOne( idEvent : string ) : Promise<Result> {
+
+        try {
+
+            const response = await this.httpClient.get( `/api/event/${idEvent}`);
+
+            const data = await response.json();
+
+            return {
+                success: true,
+                data,
+                message: "Succeso ao buscar evento!"
+            }
+
+        } catch ( error ) {
+
+            console.error( error );
+
+            return {
+                success: false,
+                data: null,
+                message: "Falha ao buscar evento!"
             }
         }
     }

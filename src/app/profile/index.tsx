@@ -3,6 +3,7 @@ import { View, Text, Image, ActivityIndicator } from 'react-native';
 import QRCode from 'react-native-qrcode-svg'; 
 import Loading from './../../components/loading';
 import BackStackScreenButton from "@/src/components/backstackscreenbutton";
+import { useSession } from "@/src/hooks/auth";
 
 //comentado para teste
 /*interface ProfileProps {
@@ -17,15 +18,16 @@ import BackStackScreenButton from "@/src/components/backstackscreenbutton";
 
 const Profile: React.FC/*<ProfileProps>*/ = (/*{ fetchData }*/) => {
   const [data, setData] = useState<{
-    name: string;
+    name: string | undefined;
     semester: string;
-    ra: string;
-    email: string;
+    ra: string | undefined;
+    email: string | undefined;
     course: string;
   } | null>(null);
 
   const [loading, setLoading] = useState<boolean>(true); 
   const [error, setError] = useState<string | null>(null); 
+  const { session } = useSession();
 
   useEffect(() => {
     /*const loadData = async () => {
@@ -43,11 +45,11 @@ const Profile: React.FC/*<ProfileProps>*/ = (/*{ fetchData }*/) => {
       try {
         // Dados estáticos para teste
         const staticData = {
-          name: 'João Silva',
+          name: session?.name,
           semester: '6º Período',
-          ra: '123456',
-          email: 'joao.silva@email.com',
-          course: 'Engenharia de Software',
+          ra: session?.nrUuid,
+          email: session?.email,
+          course: "Não informado",
         };
     //loadData();
   //}, [fetchData]);
@@ -76,12 +78,12 @@ const Profile: React.FC/*<ProfileProps>*/ = (/*{ fetchData }*/) => {
   // Exibir os dados do aluno
   if (data) {
     return (
-      <View className="flex-1 bg-neutral-700">
+      <View className="flex-1 bg-neutral-700 flex-column">
         {/* Imagem do Aluno */}
         <BackStackScreenButton />
         <View className="items-center mt-16">
           <Image
-            source={{ uri: 'https://via.placeholder.com/230' }} // Substituir pela URL da imagem do backend
+            source={require('@/assets/images/profile/sem-imagem-avatar.png')} // Substituir pela URL da imagem do backend
             className="w-40 h-40 top-10 rounded-full border-4 border-gray-700"
           />
         </View>
@@ -99,7 +101,7 @@ const Profile: React.FC/*<ProfileProps>*/ = (/*{ fetchData }*/) => {
         {/* QR Code */}
         <View className="top-12 items-center mt-10">
           <View className="p-4 bg-white rounded-lg">
-            <QRCode value={data.ra} size={230} />       
+            <QRCode value={data.ra} size={180} />       
           </View>
         </View>
 
