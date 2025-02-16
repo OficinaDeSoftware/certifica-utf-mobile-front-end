@@ -8,20 +8,20 @@ export default function Card({ event }: { event: Event }) {
   <View className="h-[300px] relative">
     <Image
       className="w-full h-full"
-      source={require('@/assets/images/event/detail/event-detail-background.jpg')}
-    />
+      source={{ uri: event.backgroundUrl }}
+      />
     <View className="z-10 m-5 p-5 bottom-[-50] left-0 right-0 absolute bg-neutral-700 rounded-3xl shadow-md shadow-gray-400">
       <View className='pb-4'>
         <Text className="text-2xl font-bold text-white mb-1">{event.name}</Text>
       </View>
       <View className="flex-row items-center pb-4">
       <Feather name="map-pin" size={24} color={'#fff'} className='pr-4' />
-        <Text className='text-white'>Local: {event.location.description}</Text>
+        <Text className='text-white'>Local: {event.location.complement}</Text>
       </View>
       <View className="flex-row items-center pb-4">
         <Fontisto name="date" size={24} color={'#fff'} className='pr-4' />
         <Text className="text-white">
-          De {new Date(event.initialDate).toLocaleDateString('pt-BR')} a {new Date(event.finalDate).toLocaleDateString('pt-BR')}
+          De { event.startDate } a { event.endDate }
         </Text>
       </View>
       

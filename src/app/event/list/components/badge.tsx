@@ -1,7 +1,7 @@
 import { View, Text } from "react-native";
 
 interface BadgeProps {
-  participants: number;
+  participants: number | undefined;
 }
 
 export default function Badge({ participants }: BadgeProps) {

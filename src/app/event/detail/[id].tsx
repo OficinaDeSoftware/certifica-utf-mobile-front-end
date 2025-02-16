@@ -15,54 +15,85 @@ import Card from './components/card';
 import Description from './components/description';
 import SubscribeParticipant from './components/subscribe-participant';
 import CheckInParticipant from './components/check-in-participant';
-
-async function delay(ms: number) {
-  return new Promise( resolve => setTimeout(resolve, ms) );
-}
-
-async function fetchEventJSONServer(eventId: string): Promise<Event | null> {
-
-  await delay(1000);
-
-  const response = await fetch(`${process.env.EXPO_PUBLIC_JSON_SERVER_API_URL}/events/${eventId}`);
-  const event = await response.json();
-
-  return event
-
-}
-
-async function fetchEvent(eventId: string): Promise<Event | null> {
-  try {
-    const event = await fetchEventJSONServer(eventId);
-
-    return event;
-  } catch (error) {
-    console.log(error)
-    return null
-  }
-}
+import { CertificaUTFEventEndpoint } from '@/src/api/endpoint/certificautf/CertificaUTFEventEndpoint';
+import { useRequest } from "@/src/api/endpoint/certificautf/useRequest";
+import { useSession } from '@/src/hooks/auth';
+import { CertificaUTFEventParticipantEndpoint } from '@/src/api/endpoint/certificautf/CertificaUTFEventParticipantEndpoint';
+import RemoveParticipant from './components/remove-participant';
 
 export default function EventDetails() {
 
   const { id: eventId }: { id: string } = useLocalSearchParams();
   const [event, setEvent] = useState<Event | null>();
-  const [loading, setLoading] = useState(false);
-  const [admin, setAdmin] = useState(true);
+  const { isLoading, error, fetchApi } = useRequest();
+  const { session } = useSession();
+  const [ isSubscribed, setIsSubscribed ] = useState<boolean>( false )
+
+  const isAdmin = session?.roles?.includes("ROLE_ADMIN")
+  const nrUuidParticipant : string = session?.nrUuid as string;
+
+  const handleSubscribeEvent: ( nrUuidParticipant : string, idEvent : string ) => Promise<void> = 
+  async ( nrUuidParticipant : string, idEvent : string ): Promise<void> => {
+    await fetchApi({
+      request: async (token) => {
+        return new CertificaUTFEventParticipantEndpoint( token ).subscribe(  nrUuidParticipant, idEvent );
+      },
+      onSuccess: (result: any) => {
+          setIsSubscribed( true )
+      },
+    });
+  };
+
+  const handleRemoveSubscribe: ( nrUuidParticipant : string, idEvent : string ) => Promise<void> = 
+  async ( nrUuidParticipant : string, idEvent : string ): Promise<void> => {
+    await fetchApi({
+      request: async (token) => {
+        return new CertificaUTFEventParticipantEndpoint( token ).remove(  nrUuidParticipant, idEvent );
+      },
+      onSuccess: (result: any) => {
+          setIsSubscribed( false )
+      },
+    });
+  };
+
+  const handleOnSubscribe: () => Promise<void> = async () : Promise<void> => {
+    handleSubscribeEvent( nrUuidParticipant, eventId )
+  }
+
+  const handleOnRemoveSubscribe: () => Promise<void> = async () : Promise<void> => {
+    handleRemoveSubscribe( nrUuidParticipant, eventId )
+  }
 
   useEffect(() => {
-    async function fetchSetEvent() {
-      setLoading(true);
-      const eventResponse = await fetchEvent(eventId)
 
-      if(eventResponse) {
-        setEvent(eventResponse);
-      }
-      setLoading(false);
-    }
-    fetchSetEvent();
+    const handleParticipantIsSubscribed: () => Promise<void> = async (): Promise<void> => {
+      await fetchApi({
+        request: async (token) => {
+          return new CertificaUTFEventParticipantEndpoint( token ).isSubscribed( nrUuidParticipant, eventId );
+        },
+        onSuccess: (result: any) => {
+          console.log( result )
+          setIsSubscribed( result?.subscribed );
+        },
+      });
+    };
+
+    const handleDetailEvent: () => Promise<void> = async (): Promise<void> => {
+      await fetchApi({
+        request: async (token) => {
+          return new CertificaUTFEventEndpoint( token ).findOne( eventId );
+        },
+        onSuccess: (result: any) => {
+            setEvent(result);
+        },
+      });
+    };
+  
+    handleDetailEvent()
+    handleParticipantIsSubscribed()
   }, [eventId]);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <View className="flex-1 items-center justify-center">
         <Text>Carregando</Text>
@@ -88,8 +119,9 @@ export default function EventDetails() {
       </ScrollView>
 
       <View>
-        {admin && <CheckInParticipant event={event} />}
-        {!admin && <SubscribeParticipant event={event} />}
+        { isAdmin && <CheckInParticipant event={event} />}
+        { !isAdmin && !isSubscribed && <SubscribeParticipant event={event} onPress={handleOnSubscribe} />}
+        { isSubscribed && <RemoveParticipant event={event} onPress={handleOnRemoveSubscribe}></RemoveParticipant>}
       </View>
     </SafeAreaView>
   );

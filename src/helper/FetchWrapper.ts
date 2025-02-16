@@ -41,6 +41,14 @@ export class FetchWrapper {
         });
     };
 
+    public async delete ( endpoint: string, body: any, headers: HeadersInit = {}): Promise<Response> {
+        return this.request( endpoint, {
+            method: 'DELETE',
+            body: JSON.stringify( body ),
+            headers,
+        });
+    };
+
     public async get ( endpoint: string, headers: HeadersInit = {}): Promise<Response> {
         return this.request( endpoint, {
             method: 'GET',

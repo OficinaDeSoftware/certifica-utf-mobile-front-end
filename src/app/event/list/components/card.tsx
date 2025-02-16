@@ -25,7 +25,7 @@ export default function Card(props: CardProps) {
     >
       <View className="bg-white rounded-lg overflow-hidden w-full h-[225px] my-2 ">
         <ImageBackground
-          source={require("@/assets/images/event/detail/event-detail-background.jpg")}
+          source={{ uri: event.backgroundUrl }}
           style={{ flex: 1, padding: 12 }}
           className="w-full h-full flex flex-col justify-between"
         >
@@ -50,7 +50,7 @@ export default function Card(props: CardProps) {
               </View>
               <View>
                 <Text className="text-gray-600">
-                  {new Date(event.initialDate).toLocaleDateString("pt-BR")}
+                  {event.startDate}
                 </Text>
               </View>
             </View>

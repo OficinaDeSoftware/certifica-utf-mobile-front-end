@@ -7,9 +7,11 @@ import SearchBar from "./components/search";
 import { Event } from "@/types/EventType";
 
 export default function EventList() {
-  const { events, isLoading, isError } = useEventList();
+  const { events, isLoading, error } = useEventList();
   const [clicked, setClicked] = React.useState<boolean>(false);
   const [searchPhrase, setSearchPhrase] = React.useState<string>("");
+
+  console.log(events);
 
   const renderCard = ({ item }: { item: Event }) => {
     if (searchPhrase === "") {
@@ -49,7 +51,7 @@ export default function EventList() {
             Nenhum evento encontrado
           </Text>
         </View>
-      ) : isError ? (
+      ) : error ? (
         <View className="flex items-center justify-center flex-1">
           <Text className="text-white text-2xl font-bold">
             Erro ao carregar
