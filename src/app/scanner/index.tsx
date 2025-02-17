@@ -12,7 +12,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import { useRequest } from "@/src/api/endpoint/certificautf/useRequest";
 import BackStackScreenButton from "@/src/components/backstackscreenbutton";
 import { CertificaUTFCheckinEndpoint } from "@/src/api/endpoint/certificautf/CertificaUTFCheckinEndpoint";
-import debounce from 'lodash/debounce';
+import debounce from "lodash.debounce";
 
 export default function Scanner() {
 
