@@ -23,7 +23,7 @@ export class CertificaUTFAuthEndpoint extends CertificaUTFEndpoint {
 
                 const errorResponse: ErrorResponse = await response.json();
 
-                console.error( errorResponse.message );
+                console.log( errorResponse.message );
 
                 // TODO alterar apresentar a mensagem do back-end quando elas forem alteradas para português.
 
@@ -44,7 +44,7 @@ export class CertificaUTFAuthEndpoint extends CertificaUTFEndpoint {
 
         } catch ( error ) {
 
-            console.error( error );
+            console.log( error );
 
             return {
                 message: "Falha ao efetuar o login!",

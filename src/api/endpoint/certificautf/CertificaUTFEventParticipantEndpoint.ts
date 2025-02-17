@@ -35,7 +35,7 @@ export class CertificaUTFEventParticipantEndpoint extends CertificaUTFEndpoint {
 
         } catch ( error ) {
 
-            console.error( error );
+            console.log( error );
 
             return {
                 success: false,
