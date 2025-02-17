@@ -21,12 +21,11 @@ import { useRequest } from "@/src/api/endpoint/certificautf/useRequest";
 import { useSession } from '@/src/hooks/auth';
 import { CertificaUTFEventParticipantEndpoint } from '@/src/api/endpoint/certificautf/CertificaUTFEventParticipantEndpoint';
 import RemoveParticipant from './components/remove-participant';
-import { StyledButton } from '@/src/components/styledbutton';
 
 export default function EventDetails() {
 
   const { id: eventId }: { id: string } = useLocalSearchParams();
-  const [event, setEvent] = useState<Event | null>();
+  const [event, setEvent] = useState<Event | null>( null );
   const { isLoading, error, fetchApi } = useRequest();
   const { session } = useSession();
   const [ isSubscribed, setIsSubscribed ] = useState<boolean>( false )
@@ -89,9 +88,16 @@ export default function EventDetails() {
         },
       });
     };
-  
-    handleDetailEvent()
-    handleParticipantIsSubscribed()
+
+    // TODO adicionado para ser sincrono porque esta impactando no comportamento do loading por conta das duas requests usarem o mesmo state de loading
+    // Essa solução eh errada mais paliativa
+    const fetchData: () => Promise<void> = async (): Promise<void> => {
+      await handleDetailEvent()
+      await handleParticipantIsSubscribed()
+    };
+
+    fetchData();
+
   }, [eventId]);
 
   if (isLoading) {
