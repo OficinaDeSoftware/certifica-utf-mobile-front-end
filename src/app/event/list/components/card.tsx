@@ -1,4 +1,4 @@
-import { Event } from "@/types/EventType";
+import { Event, EventBasic } from "@/types/EventType";
 import { ImageBackground, View, TouchableOpacity, Text } from "react-native";
 import Badge from "./badge";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,7 +6,7 @@ import { router } from "expo-router";
 import ParticipantImage from "../../detail/components/participant-image";
 
 interface CardProps {
-  event: Event;
+  event: EventBasic;
 }
 
 export default function Card(props: CardProps) {
@@ -18,7 +18,7 @@ export default function Card(props: CardProps) {
         router.push({
           pathname: "/event/detail/[id]",
           params: {
-            id: event.id,
+            id: event.idEvent,
           },
         })
       }
@@ -30,7 +30,7 @@ export default function Card(props: CardProps) {
           className="w-full h-full flex flex-col justify-between"
         >
           <View className="flex flex-row justify-between">
-            <Badge participants={event.participants} />
+            <Badge participants={event.participantsCount} />
             <TouchableOpacity
               className="bg-white rounded-full p-2 ml-4 justify-center items-center"
               style={{ padding: 10 }}

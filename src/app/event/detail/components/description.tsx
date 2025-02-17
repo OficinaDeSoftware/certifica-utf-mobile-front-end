@@ -6,7 +6,7 @@ import MapView, { Marker } from "react-native-maps";
 export default function Description({ event }: { event: Event }) {
   return (
   <View className="p-5 pt-12">
-    <View className="mb-6">
+    <View className="mb-6 pt-4">
       <Text className="text-lg font-semibold text-white mb-3">Descrição</Text>
       <Text className="text-base text-white opacity-80 leading-6">
         {event.description}

@@ -99,7 +99,7 @@ const Profile: React.FC/*<ProfileProps>*/ = (/*{ fetchData }*/) => {
         </Text>
 
         {/* QR Code */}
-        <View className="top-12 items-center mt-10">
+        <View className="top-6 items-center mt-10">
           <View className="p-4 bg-white rounded-lg">
             <QRCode value={data.ra} size={120} />       
           </View>

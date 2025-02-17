@@ -15,17 +15,13 @@ export class CertificaUTFCheckinEndpoint extends CertificaUTFEndpoint {
                 nrUuidParticipant: nrUuid,
             }
 
-            console.log('checkin' );
-            console.log( request );
-            console.log('Evento' );
-            console.log( idEvent );
-
             const response = await this.httpClient.post(`/api/event/${idEvent}/checkin`, request);
 
-            const data = await response.json();
+            if( !response.ok ) {
+                throw new Error("Falha ao realizar checkin!")
+            }
 
-            console.log( "Retorno: ");
-            console.log( data );
+            const data = await response.json();
 
             return {
                 success: true,
@@ -52,12 +48,11 @@ export class CertificaUTFCheckinEndpoint extends CertificaUTFEndpoint {
                 nrUuidParticipant: nrUuid,
             }
 
-            console.log('checkout' );
-            console.log( request );
-            console.log('Evento' );
-            console.log( idEvent );
-
             const response = await this.httpClient.post(`/api/event/${idEvent}/checkout`, request);
+
+            if( !response.ok ) {
+                throw new Error("Falha ao realizar checkout!")
+            }
 
             const data = await response.json();
 

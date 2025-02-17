@@ -4,6 +4,7 @@ import {
   Text,
   ScrollView,
   SafeAreaView,
+  ActivityIndicator,
 } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 
@@ -20,6 +21,7 @@ import { useRequest } from "@/src/api/endpoint/certificautf/useRequest";
 import { useSession } from '@/src/hooks/auth';
 import { CertificaUTFEventParticipantEndpoint } from '@/src/api/endpoint/certificautf/CertificaUTFEventParticipantEndpoint';
 import RemoveParticipant from './components/remove-participant';
+import { StyledButton } from '@/src/components/styledbutton';
 
 export default function EventDetails() {
 
@@ -72,7 +74,6 @@ export default function EventDetails() {
           return new CertificaUTFEventParticipantEndpoint( token ).isSubscribed( nrUuidParticipant, eventId );
         },
         onSuccess: (result: any) => {
-          console.log( result )
           setIsSubscribed( result?.subscribed );
         },
       });
@@ -95,8 +96,8 @@ export default function EventDetails() {
 
   if (isLoading) {
     return (
-      <View className="flex-1 items-center justify-center">
-        <Text>Carregando</Text>
+      <View style={{ flex: 1 }} className="flex items-center justify-center">
+        <ActivityIndicator animating={isLoading} size="large" />
       </View>
     );
   }
@@ -122,7 +123,7 @@ export default function EventDetails() {
         { isAdmin && <CheckInParticipant event={event} isCheckin={true} /> }
         { isAdmin && <CheckInParticipant event={event} isCheckin={false} /> }
         { !isAdmin && !isSubscribed && <SubscribeParticipant event={event} onPress={handleOnSubscribe} /> }
-        { isSubscribed && <RemoveParticipant event={event} onPress={handleOnRemoveSubscribe}></RemoveParticipant> }
+        { isSubscribed && !isAdmin && <RemoveParticipant event={event} onPress={handleOnRemoveSubscribe}></RemoveParticipant> }
       </View>
     </SafeAreaView>
   );

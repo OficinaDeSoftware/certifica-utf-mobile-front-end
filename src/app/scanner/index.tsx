@@ -8,27 +8,26 @@ import {
   StyleSheet,
 } from "react-native";
 import Overlay from "@/src/app/scanner/overlay";
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useRequest } from "@/src/api/endpoint/certificautf/useRequest";
 import BackStackScreenButton from "@/src/components/backstackscreenbutton";
 import { CertificaUTFCheckinEndpoint } from "@/src/api/endpoint/certificautf/CertificaUTFCheckinEndpoint";
+import debounce from 'lodash/debounce';
 
 export default function Scanner() {
+
   const { checkin, idEvent } = useLocalSearchParams(); 
   const ischeckin = checkin == 'true';
-  const qrLock = useRef(false);
   const appState = useRef(AppState.currentState);
-  const [status, setStatus] = useState(false);
   const { fetchApi } = useRequest();
+  const isLock = useRef(false);
 
   useEffect(() => {
     const subscription = AppState.addEventListener("change", (nextAppState) => {
       if (
         appState.current.match(/inactive|background/) &&
         nextAppState === "active"
-      ) {
-        qrLock.current = false;
-      }
+      ) 
       appState.current = nextAppState;
     });
 
@@ -37,47 +36,70 @@ export default function Scanner() {
     };
   }, []);
 
-  const handleCheckin: (nrUuid: string) => Promise<void> = async (nrUuid: string): Promise<void> => {
-    await fetchApi({
+  const handleCheckin: (nrUuid: string) => Promise<boolean> = async (nrUuid: string): Promise<boolean> => {
+    return await fetchApi({
       request: async (token) => {
         return new CertificaUTFCheckinEndpoint(token).checkin(idEvent as string, nrUuid);
       },
       onSuccess: (result: any) => {
-        setStatus(true);
+        console.log("Sucesso ao efetuar checkin!")
       },
     });
   };
 
-  const handleCheckout: (nrUuid: string) => Promise<void> = async (nrUuid: string): Promise<void> => {
-    await fetchApi({
+  const handleCheckout: (nrUuid: string) => Promise<boolean> = async (nrUuid: string): Promise<boolean> => {
+    return await fetchApi({
       request: async (token) => {
         return new CertificaUTFCheckinEndpoint(token).checkout(idEvent as string, nrUuid);
       },
       onSuccess: (result: any) => {
-        setStatus(true);
+        console.log("Sucesso ao efetuar checkout!")
       },
     });
   };
 
-  function validateCode(data: string): boolean {
+  async function onScannerCodeRead( event : any ) {
 
-    console.log("checkin = " + ischeckin);
-    console.log(data);
-    console.log(ischeckin);
+      console.log( event.data )
+      
+      if( isLock.current ) {
+        return;
+      }
+
+      isLock.current = true;
+
+      const isSuccess = await validateCode( event.data );
+
+      if( isSuccess ) {
+
+        router.push({
+          pathname: '/scanner/status',
+          params: { status: String(true), checkin },
+        });
+
+        return;
+      }
+
+      router.push({
+        pathname: '/scanner/status',
+        params: { status: String(false), checkin },
+      });
+ 
+      isLock.current = false;
+
+  }
+
+  const debouncedOnBarCodeRead = useCallback(debounce(onScannerCodeRead, 1000), []);
+
+  async function validateCode(data: string): Promise<boolean> {
 
     if (ischeckin) {
-      handleCheckin(data);
-    } else {
-      handleCheckout(data);
+      return await handleCheckin(data);
     }
 
-    if (status) {
-      return true;
-    } else {
-      return false;
-    }
+    return await handleCheckout(data);
   }
-''
+
   return (
     <SafeAreaView style={StyleSheet.absoluteFillObject}>
       {Platform.OS === "android" ? <StatusBar hidden /> : null}
@@ -87,21 +109,7 @@ export default function Scanner() {
       <CameraView
         style={StyleSheet.absoluteFillObject}
         facing="back"
-        onBarcodeScanned={({ data }) => {
-          if (validateCode(data) && !qrLock.current) {
-            qrLock.current = true;
-            router.push({
-              pathname: '/scanner/status',
-              params: { status: String(true) },
-            });
-          } else {
-            router.push({
-              pathname: '/scanner/status',
-              params: { status: String(false) },
-            });
-          }
-          setStatus(false)
-        }}
+        onBarcodeScanned={debouncedOnBarCodeRead}
         barcodeScannerSettings={{
           barcodeTypes: ["qr"],
         }}
