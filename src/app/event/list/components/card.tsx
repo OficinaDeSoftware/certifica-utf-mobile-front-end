@@ -43,15 +43,9 @@ export default function Card(props: CardProps) {
             <Text className="text-lg font-bold text-black">{event.name}</Text>
             <View className="flex flex-row justify-between items-center">
               <View className="flex flex-row gap-2 items-center">
-                <ParticipantImage imageSrc={""} />
-                <Text className="text-black font-semibold text-lg">
-                  Wonderwood
-                </Text>
-              </View>
-              <View>
                 <Text className="text-gray-600">
                   {event.startDate}
-                </Text>
+                </Text>              
               </View>
             </View>
           </View>
