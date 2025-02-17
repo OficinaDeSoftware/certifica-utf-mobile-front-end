@@ -92,8 +92,8 @@ export default function EventDetails() {
     // TODO adicionado para ser sincrono porque esta impactando no comportamento do loading por conta das duas requests usarem o mesmo state de loading
     // Essa solução eh errada mais paliativa
     const fetchData: () => Promise<void> = async (): Promise<void> => {
-      await handleParticipantIsSubscribed()
       await handleDetailEvent()
+      await handleParticipantIsSubscribed()
     };
 
     fetchData();
