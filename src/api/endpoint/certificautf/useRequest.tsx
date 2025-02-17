@@ -13,7 +13,7 @@ export function useRequest() {
     const [ error, setError ] = useState<string | undefined | null>( undefined )
     const { session } = useSession();
 
-    async function fetchApi( { request, onSuccess } : RequestOptions) : Promise<void> {
+    async function fetchApi( { request, onSuccess } : RequestOptions) : Promise<boolean> {
 
         setIsLoading( true );
 
@@ -26,6 +26,8 @@ export function useRequest() {
         }
 
         setIsLoading( false );
+
+        return result.success;
 
     }
 

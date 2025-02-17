@@ -65,10 +65,10 @@ export default function SignIn() {
                         Entrar
                     </StyledButton>
                    {/*TODO alterar para usar o button do provider.*/}
-                    <TouchableOpacity className="bg-white rounded-full flex flex-row justify-center items-center h-14 gap-2">
+                    {/* <TouchableOpacity className="bg-white rounded-full flex flex-row justify-center items-center h-14 gap-2">
                         <Ionicons name="logo-google" size={24} color="black" />
                         <Text>Continuar com o Google</Text>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
                 </View>
             </View>
         </View>

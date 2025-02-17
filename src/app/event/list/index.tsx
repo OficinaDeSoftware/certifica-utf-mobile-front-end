@@ -4,16 +4,17 @@ import useEventList from "./hooks/useEventList";
 import TitleSection from "./components/titleSection";
 import Card from "./components/card";
 import SearchBar from "./components/search";
-import { Event } from "@/types/EventType";
+import { EventBasic } from "@/types/EventType";
 
 export default function EventList() {
   const { events, isLoading, error } = useEventList();
   const [clicked, setClicked] = React.useState<boolean>(false);
   const [searchPhrase, setSearchPhrase] = React.useState<string>("");
 
+  console.log("Aqui");
   console.log(events);
 
-  const renderCard = ({ item }: { item: Event }) => {
+  const renderCard = ({ item }: { item: EventBasic }) => {
     if (searchPhrase === "") {
       return <Card event={item} />;
     }
@@ -61,7 +62,7 @@ export default function EventList() {
         <FlatList
           data={events}
           renderItem={renderCard}
-          keyExtractor={(item) => item.id}
+          keyExtractor={(item) => item.idEvent}
         />
       )}
     </View>
