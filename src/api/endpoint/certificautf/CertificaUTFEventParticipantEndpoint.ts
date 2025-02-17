@@ -21,6 +21,10 @@ export class CertificaUTFEventParticipantEndpoint extends CertificaUTFEndpoint {
                 request
             );
 
+            if( !response.ok ) {
+                throw new Error("Falha ao se inscrever no evento!")
+            }
+
             const data = await response.json();
 
             return {
@@ -53,6 +57,10 @@ export class CertificaUTFEventParticipantEndpoint extends CertificaUTFEndpoint {
                 `/api/event/participant/${nrUuidParticipant}/remove`,
                 request
             );
+
+            if( !response.ok ) {
+                throw new Error("Falha ao sair do evento!")
+            }
 
             const data = await response.json();
 

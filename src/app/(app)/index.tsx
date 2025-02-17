@@ -16,14 +16,6 @@ export default function App() {
         }}>
         Sign Out
       </Text>
-      
-      <TouchableOpacity onPress={() => router.push("/scanner")}>
-        <Text>Go to Scanner</Text>
-      </TouchableOpacity>
-      
-      <TouchableOpacity onPress={() => router.push("/event/detail")}>
-        <Text>Go to Detail</Text>
-      </TouchableOpacity>
     </View>
   );
 }

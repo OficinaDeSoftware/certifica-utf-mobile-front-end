@@ -8,8 +8,19 @@ export type Event = {
   location: EventLocation;
   dates: Array<EventDate>;
   backgroundUrl: string;
-  participants: number | undefined;	
+  participantsCount: number | undefined;	
 }
+
+export type EventBasic = {
+  idEvent: string;
+  name: string;
+  startDate: string;
+  endDate: string;
+  description: string;
+  backgroundUrl: string;
+  participantsCount: number | undefined;	
+}
+
 
 export type EventLocation = {
   address: string;
