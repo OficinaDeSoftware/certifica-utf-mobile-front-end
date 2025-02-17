@@ -119,9 +119,10 @@ export default function EventDetails() {
       </ScrollView>
 
       <View>
-        { isAdmin && <CheckInParticipant event={event} />}
-        { !isAdmin && !isSubscribed && <SubscribeParticipant event={event} onPress={handleOnSubscribe} />}
-        { isSubscribed && <RemoveParticipant event={event} onPress={handleOnRemoveSubscribe}></RemoveParticipant>}
+        { isAdmin && <CheckInParticipant event={event} isCheckin={true} /> }
+        { isAdmin && <CheckInParticipant event={event} isCheckin={false} /> }
+        { !isAdmin && !isSubscribed && <SubscribeParticipant event={event} onPress={handleOnSubscribe} /> }
+        { isSubscribed && <RemoveParticipant event={event} onPress={handleOnRemoveSubscribe}></RemoveParticipant> }
       </View>
     </SafeAreaView>
   );
